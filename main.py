@@ -43,7 +43,6 @@ class DownloadFrame(ctk.CTkFrame):
         # Button
         self.download_button = ctk.CTkButton(self, text='Download', command=self.download)
         self.download_button.grid(row=2, column=1, padx=10, pady=10, sticky='ew')
-        self.download_button.configure(state='disabled')
 
         # Radio Buttons
         self.download_video = ctk.CTkRadioButton(self, text='Video', variable=self.radio_var, value=1)
@@ -62,26 +61,23 @@ class DownloadFrame(ctk.CTkFrame):
             if len(yt_link) != 0:
                 YouTube(yt_link)
                 self.download_entry.configure(border_color='#16FF00')
-                self.download_button.configure(state='normal')
                 self.download_status.configure(text='Ready', text_color='#16FF00')
                 return True
             else:
                 self.download_entry.configure(border_color='#FE0000')
-                self.download_button.configure(state='disabled')
                 self.download_status.configure(text='Waiting for input...', text_color='#F0F0F0')
                 self.download_progress.configure(text='0%')
                 self.download_progressbar.set(0)
                 return False
         except pytube.exceptions.ExtractError:
             self.download_entry.configure(border_color='#FE0000')
-            self.download_button.configure(state='disabled')
             self.download_status.configure(text='Invalid Youtube Link', text_color='#FE0000')
             self.download_progress.configure(text='0%')
             self.download_progressbar.set(0)
             return False
 
     def download(self):
-        if self.is_valid:
+        if self.is_valid(None):
             try:
                 yt_link = self.url.get()
                 yt_obj = YouTube(yt_link, on_progress_callback=self.on_progress)
@@ -103,6 +99,8 @@ class DownloadFrame(ctk.CTkFrame):
                         self.download_status.configure(text='Specify download type', text_color='#FE0000')
             except pytube.exceptions.PytubeError:
                 self.download_status.configure(text='Unable to download video', text_color='#FE0000')
+        else:
+            print("invalid")
 
     def on_progress(self, stream, chunk, bytes_remaining):
         total_size = stream.filesize

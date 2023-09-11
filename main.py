@@ -100,7 +100,7 @@ class DownloadFrame(ctk.CTkFrame):
             except pytube.exceptions.PytubeError:
                 self.download_status.configure(text='Unable to download video', text_color='#FE0000')
         else:
-            print("invalid")
+            self.download_status.configure(text='No Link Entered', text_color='#FE0000')
 
     def on_progress(self, stream, chunk, bytes_remaining):
         total_size = stream.filesize

@@ -7,50 +7,54 @@ import pytube.exceptions
 ctk.set_appearance_mode('system')
 ctk.set_default_color_theme('blue')
 
+appWidth, appheight = 600, 280
 
-appWidth, appheight = 600, 320
 
-
-class MyTabview(ctk.CTkTabview):
+class DownloadFrame(ctk.CTkFrame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
         # Define StringVar
         self.url = StringVar()
+        self.radio_var = IntVar(value=0)
 
-        # Create Tabs
-        download_tab = self.add('Download')
-        convert_tab = self.add('Convert')
-
-        # ----------------------------------------------- Download Tab ----------------------------------------------- #
-        # Configure Tab
-        self.tab('Download').columnconfigure(0, weight=1)
-        self.tab('Download').columnconfigure(1, weight=1)
+        # Frame Columns
+        self.columnconfigure(0, weight=1)
+        self.columnconfigure(1, weight=1)
 
         # Labels
-        self.download_label = ctk.CTkLabel(download_tab, text='Insert Video Link:', font=('century gothic', 15))
+        self.download_label = ctk.CTkLabel(self, text='Insert Video Link:', font=('roboto', 15))
         self.download_label.grid(row=0, column=0, padx=10, pady=10, sticky='w')
 
-        self.download_status = ctk.CTkLabel(download_tab, text='Waiting for input...', font=('lucida sans unicode', 12))
-        self.download_status.grid(row=1, column=0, padx=10, pady=10, sticky='e')
+        self.download_status = ctk.CTkLabel(self, text='Waiting for input...', font=('roboto', 12))
+        self.download_status.grid(row=1, column=1, padx=10, sticky='e')
 
-        self.download_progress = ctk.CTkLabel(download_tab, text='0%', font=('lucida sans unicode', 12))
-        self.download_progress.grid(row=2, column=1, padx=10, pady=10, sticky='e')
+        self.download_progress = ctk.CTkLabel(self, text='0%', font=('lucida sans unicode', 12))
+        self.download_progress.grid(row=3, column=1, padx=10, pady=10, sticky='e')
+
+        self.download_video_title = ctk.CTkLabel(self, text='')
+        self.download_video_title.grid(row=4, column=0, columnspan=2, padx=10, pady=10, sticky='ew')
 
         # Entry
-        self.download_entry = ctk.CTkEntry(download_tab, border_color='#40F8FF', textvariable=self.url,
+        self.download_entry = ctk.CTkEntry(self, border_color='#40F8FF', textvariable=self.url,
                                            validatecommand=self.is_valid)
         self.download_entry.grid(row=0, column=0, columnspan=2, padx=(140, 10), pady=10, sticky='ew')
         self.download_entry.bind('<KeyRelease>', self.is_valid)
 
         # Button
-        self.download_button = ctk.CTkButton(download_tab, text='Download', command=self.download)
-        self.download_button.grid(row=1, column=1, padx=10, pady=10, sticky='ew')
+        self.download_button = ctk.CTkButton(self, text='Download', command=self.download)
+        self.download_button.grid(row=2, column=1, padx=10, pady=10, sticky='ew')
         self.download_button.configure(state='disabled')
 
+        # Radio Buttons
+        self.download_video = ctk.CTkRadioButton(self, text='Video', variable=self.radio_var, value=1)
+        self.download_video.grid(row=2, column=0, padx=10, pady=10, sticky='w')
+        self.download_audio = ctk.CTkRadioButton(self, text='Audio', variable=self.radio_var, value=2)
+        self.download_audio.grid(row=2, column=0, padx=10, pady=10, sticky='e')
+
         # Progress Bar
-        self.download_progressbar = ctk.CTkProgressBar(download_tab, orientation='horizontal')
+        self.download_progressbar = ctk.CTkProgressBar(self, orientation='horizontal')
         self.download_progressbar.set(0)
-        self.download_progressbar.grid(row=2, column=0, columnspan=2, padx=(10, 50), pady=10, sticky='ew')
+        self.download_progressbar.grid(row=3, column=0, columnspan=2, padx=(10, 50), pady=(10, 0), sticky='ew')
 
     def is_valid(self, event):
         yt_link = self.url.get()
@@ -81,13 +85,24 @@ class MyTabview(ctk.CTkTabview):
             try:
                 yt_link = self.url.get()
                 yt_obj = YouTube(yt_link, on_progress_callback=self.on_progress)
-                video = yt_obj.streams.get_highest_resolution()
                 download_location = filedialog.askdirectory()
                 if download_location:
-                    video.download(output_path=download_location)
-                    self.download_status.configure(text='Download Done', text_color='#16FF00')
+                    if self.radio_var.get() == 1:
+                        video = yt_obj.streams.get_highest_resolution()
+                        self.download_status.configure(text='Downloading...')
+                        self.download_video_title.configure(text=yt_obj.title)
+                        video.download(output_path=download_location)
+                        self.download_status.configure(text='Download Done', text_color='#16FF00')
+                    elif self.radio_var.get() == 2:
+                        audio = yt_obj.streams.get_audio_only('mp4')
+                        self.download_status.configure(text='Downloading...')
+                        self.download_video_title.configure(text=yt_obj.title)
+                        audio.download(output_path=download_location)
+                        self.download_status.configure(text='Download Done', text_color='#16FF00')
+                    else:
+                        self.download_status.configure(text='Specify download type', text_color='#FE0000')
             except pytube.exceptions.PytubeError:
-                self.download_status.configure(text='Download Failed', text_color='#FE0000')
+                self.download_status.configure(text='Unable to download video', text_color='#FE0000')
 
     def on_progress(self, stream, chunk, bytes_remaining):
         total_size = stream.filesize
@@ -99,6 +114,7 @@ class MyTabview(ctk.CTkTabview):
 
         # Update Progress Bar
         self.download_progressbar.set(float(percentage_of_completion / 100))
+
 
 class App(ctk.CTk):
     def __init__(self, **kwargs):
@@ -112,7 +128,8 @@ class App(ctk.CTk):
         # Create Window
         self.geometry(f'{appWidth}x{appheight}+{x}+{y}')
         self.resizable(False, False)
-        self.title('YouTube Downloader/Converter')
+        self.title('YouTube Downloader')
+        self.iconbitmap('Icon.ico')
 
         # Configure App Column
         self.columnconfigure(0, weight=1)
@@ -121,13 +138,13 @@ class App(ctk.CTk):
         self.rowconfigure(1, weight=1)
 
         # Add App Label
-        self.app_label = ctk.CTkLabel(self, text='YOUTUBE VIDEO \n DOWNLOADER / CONVERTER',
+        self.app_label = ctk.CTkLabel(self, text='YOUTUBE DOWNLOADER\n VIDEO | AUDIO',
                                       font=('sans serif', 20, 'bold'))
         self.app_label.grid(row=0, column=0, columnspan=2, padx=10, pady=(10, 0), sticky='ew')
 
         # Create Tabview
-        self.tab_view = MyTabview(self)
-        self.tab_view.grid(row=1, column=0, columnspan=2, rowspan=2, padx=10, pady=10, sticky='nsew')
+        self.downloadframe = DownloadFrame(self)
+        self.downloadframe.grid(row=1, column=0, columnspan=2, rowspan=2, padx=10, pady=10, sticky='nsew')
 
         self.mainloop()
 

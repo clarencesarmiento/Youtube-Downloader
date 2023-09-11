@@ -7,7 +7,7 @@ import pytube.exceptions
 ctk.set_appearance_mode('system')
 ctk.set_default_color_theme('blue')
 
-appWidth, appheight = 600, 280
+appWidth, appheight = 600, 300
 
 
 class DownloadFrame(ctk.CTkFrame):
@@ -32,7 +32,7 @@ class DownloadFrame(ctk.CTkFrame):
         self.download_progress.grid(row=3, column=1, padx=10, pady=10, sticky='e')
 
         self.download_video_title = ctk.CTkLabel(self, text='')
-        self.download_video_title.grid(row=4, column=0, columnspan=2, padx=10, pady=10, sticky='ew')
+        self.download_video_title.grid(row=4, column=0, columnspan=2, padx=10, sticky='ew')
 
         # Entry
         self.download_entry = ctk.CTkEntry(self, border_color='#40F8FF', textvariable=self.url,
@@ -54,7 +54,7 @@ class DownloadFrame(ctk.CTkFrame):
         # Progress Bar
         self.download_progressbar = ctk.CTkProgressBar(self, orientation='horizontal')
         self.download_progressbar.set(0)
-        self.download_progressbar.grid(row=3, column=0, columnspan=2, padx=(10, 50), pady=(10, 0), sticky='ew')
+        self.download_progressbar.grid(row=3, column=0, columnspan=2, padx=(10, 50), sticky='ew')
 
     def is_valid(self, event):
         yt_link = self.url.get()
@@ -142,10 +142,13 @@ class App(ctk.CTk):
                                       font=('sans serif', 20, 'bold'))
         self.app_label.grid(row=0, column=0, columnspan=2, padx=10, pady=(10, 0), sticky='ew')
 
-        # Create Tabview
+        # Create Frame
         self.downloadframe = DownloadFrame(self)
-        self.downloadframe.grid(row=1, column=0, columnspan=2, rowspan=2, padx=10, pady=10, sticky='nsew')
+        self.downloadframe.grid(row=1, column=0, columnspan=2, padx=10, pady=(10, 0), sticky='nsew')
 
+        # Author
+        self.author = ctk.CTkLabel(self, text='C.Sarmiento 2023 Version 1.0', font=('helvetica', 10))
+        self.author.grid(row=2, column=0, padx=10, sticky='w')
         self.mainloop()
 
 

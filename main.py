@@ -4,7 +4,7 @@ from tkinter import *
 from pytube import YouTube
 import pytube.exceptions
 
-ctk.set_appearance_mode('system')
+ctk.set_appearance_mode('dark')
 ctk.set_default_color_theme('blue')
 
 appWidth, appheight = 600, 300
@@ -131,6 +131,7 @@ class App(ctk.CTk):
 
         # Configure App Column
         self.columnconfigure(0, weight=1)
+        self.columnconfigure(1, weight=1)
 
         # Configure App Row
         self.rowconfigure(1, weight=1)

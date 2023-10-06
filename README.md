@@ -4,7 +4,15 @@
 ## DESCRIPTION:
 A desktop application written in Python to download YouTube Video or Audio.
 ### How the Program Works?
-The application utilizes `customtkinter`[^1] for the graphic user interface and a library called `pytube`[^2] to download youtube videos.
+First, the program validates the link if it is a valid youtube link before downloading. 
+Check [Wiki](https://github.com/clarencesarmiento/Youtube-Downloader/wiki) for more information.
+### Built With
+- [python](https://www.python.org/) - Backend
+- [customtkinter](https://github.com/tomschimansky/customtkinter) - Frontend
+
+### Extensions
+- [pytube](https://pytube.io/en/latest/index.html) - Package
+
 ## TODO:
 ### Download
 Download the Repository through Clone Repository using [Git](https://git-scm.com/downloads) or Download Zip.
@@ -14,7 +22,7 @@ git clone https://github.com/clarencesarmiento/Youtube-Downloader.git
 ### Installation
 After downloading, go to `cmd` and navigate to the folder directory.
 ```
-cd Youtube-Downloader
+cd \folder_directory\Youtube-Downloader
 ```
 Use [pip](https://pip.pypa.io/en/stable/) to install needed libraries inside
 the `requirements.txt`.
@@ -28,6 +36,5 @@ python main.py
 ```
 ## FUTURE FEATURES 🌟
 - Download a Playlist 🎶
-## REFERENCES:
-[^1]: [customtkinter](https://github.com/TomSchimansky/CustomTkinter)
-[^2]: [pytube](https://pytube.io/en/latest/index.html)
+## LICENSE:
+Distributed under the MIT License. See `LICENSE` for more information.

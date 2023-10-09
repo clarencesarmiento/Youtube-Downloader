@@ -3,6 +3,8 @@ from tkinter import filedialog
 from tkinter import *
 from pytube import YouTube
 import pytube.exceptions
+import os
+import threading
 
 ctk.set_appearance_mode('dark')
 ctk.set_default_color_theme('blue')
@@ -41,7 +43,7 @@ class DownloadFrame(ctk.CTkFrame):
         self.download_entry.bind('<KeyRelease>', self.is_valid)
 
         # Button
-        self.download_button = ctk.CTkButton(self, text='Download', command=self.download)
+        self.download_button = ctk.CTkButton(self, text='Download', command=self.on_download_button_click)
         self.download_button.grid(row=2, column=1, padx=10, pady=10, sticky='ew')
 
         # Radio Buttons
@@ -66,34 +68,44 @@ class DownloadFrame(ctk.CTkFrame):
             else:
                 self.download_entry.configure(border_color='#FE0000')
                 self.download_status.configure(text='Waiting for input...', text_color='#F0F0F0')
-                self.download_progress.configure(text='0%')
-                self.download_progressbar.set(0)
                 return False
         except pytube.exceptions.ExtractError:
             self.download_entry.configure(border_color='#FE0000')
             self.download_status.configure(text='Invalid Youtube Link', text_color='#FE0000')
-            self.download_progress.configure(text='0%')
-            self.download_progressbar.set(0)
             return False
 
     def download(self):
+        self.download_video_title.configure(text='')
+        self.download_progress.configure(text='0%')
+        self.download_progressbar.set(0)
         if self.is_valid(None):
             try:
                 yt_link = self.url.get()
                 yt_obj = YouTube(yt_link, on_progress_callback=self.on_progress)
                 download_location = filedialog.askdirectory()
                 if download_location:
+                    # Download Video
                     if self.radio_var.get() == 1:
+                        # Create a Video folder inside the parent download location
+                        video_folder = os.path.join(download_location, 'Video')
+                        os.makedirs(video_folder, exist_ok=True)
+
                         video = yt_obj.streams.get_highest_resolution()
                         self.download_status.configure(text='Downloading...')
                         self.download_video_title.configure(text=yt_obj.title)
-                        video.download(output_path=download_location)
+                        video.download(output_path=video_folder)
                         self.download_status.configure(text='Download Done', text_color='#16FF00')
+
+                    # Download Audio
                     elif self.radio_var.get() == 2:
+                        # Create an Audio folder inside the parent download location
+                        audio_folder = os.path.join(download_location, 'Audio')
+                        os.makedirs(audio_folder, exist_ok=True)
+
                         audio = yt_obj.streams.get_audio_only('mp4')
                         self.download_status.configure(text='Downloading...')
                         self.download_video_title.configure(text=yt_obj.title)
-                        audio.download(output_path=download_location)
+                        audio.download(output_path=audio_folder)
                         self.download_status.configure(text='Download Done', text_color='#16FF00')
                     else:
                         self.download_status.configure(text='Specify download type', text_color='#FE0000')
@@ -101,6 +113,10 @@ class DownloadFrame(ctk.CTkFrame):
                 self.download_status.configure(text='Unable to download video', text_color='#FE0000')
         else:
             self.download_status.configure(text='No Link Entered', text_color='#FE0000')
+
+    def on_download_button_click(self):
+        thread = threading.Thread(target=self.download)
+        thread.start()
 
     def on_progress(self, stream, chunk, bytes_remaining):
         total_size = stream.filesize

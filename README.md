@@ -1,6 +1,8 @@
 # YouTube Downloader ![image](https://github.com/clarencesarmiento/Youtube-Downloader/blob/58b22871b61455c249d4c00d6a107e660c8bc231/Icon.ico)
 ![images](https://github.com/clarencesarmiento/Youtube-Downloader/blob/17703353b9cdb6049f8a515ee4082a195f26f8b2/YouTube-Downloader%20Interface.png)
 
+## [.exe](https://www.mediafire.com/file/30nupbjy9j3dj0u/YouTube-Downloader_V1.1.zip/file)
+
 ## DESCRIPTION:
 A desktop application written in Python to download YouTube Video or Audio.
 ### How the Program Works?

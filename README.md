@@ -1,5 +1,5 @@
 # YouTube Downloader ![image](https://github.com/clarencesarmiento/Youtube-Downloader/blob/58b22871b61455c249d4c00d6a107e660c8bc231/Icon.ico)
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/clarencesarmiento/Youtube-Downloader/blob/638e7266043379c67f927dbfcdccc1972c17c990/LICENSE.md)
 [![Moodboard](https://img.shields.io/badge/Behance-Moodboard-blue.svg)](https://www.behance.net/gallery/181696015/Video-Audio-YouTube-Downloader)
 
 ![images](https://github.com/clarencesarmiento/Youtube-Downloader/blob/17703353b9cdb6049f8a515ee4082a195f26f8b2/YouTube-Downloader%20Interface.png)

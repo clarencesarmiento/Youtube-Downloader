@@ -1,0 +1,39 @@
+{
+  "colors": {
+    "neutral_500": "#191A1B",
+    "neutral_400": "#5C5C5C",
+    "neutral_300": "#A6A6A6",
+    "neutral_200": "#DFDFDF",
+    "neutral_100": "#FCFCFC",
+    "accent_0": "#E65C4F",
+    "accent_1": "#C02B1D",
+    "danger_600": "#D80914",
+    "danger_400": "#F6545D",
+    "success_600": "#3DB500",
+    "success_400": "#75D446",
+    "warning_600": "#EBA214",
+    "warning_400": "#FBBF4B"
+  },
+  "fonts": {
+    "title": [
+      "Inter",
+      24,
+      "bold"
+    ],
+    "paragraph": [
+      "Inter",
+      16
+    ],
+    "small": [
+      "Inter",
+      10.67
+    ]
+  },
+  "images": {
+    "sun_icon": "Assets/sun.png",
+    "moon_icon": "Assets/moon.png",
+    "paste_icon_light": "Assets/paste-solid_light.png",
+    "paste_icon_dark": "Assets/paste-solid_dark.png",
+    "download_icon": "Assets/download-arrow.png"
+  }
+}

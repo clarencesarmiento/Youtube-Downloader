@@ -1,45 +1,71 @@
-# YouTube Downloader ![image](https://github.com/clarencesarmiento/Youtube-Downloader/blob/58b22871b61455c249d4c00d6a107e660c8bc231/Icon.ico)
+
+# YouTube Video & Audio Downloader
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/clarencesarmiento/Youtube-Downloader/blob/638e7266043379c67f927dbfcdccc1972c17c990/LICENSE.md)
 [![Moodboard](https://img.shields.io/badge/Behance-Moodboard-blue.svg)](https://www.behance.net/gallery/181696015/Video-Audio-YouTube-Downloader)
 
-![images](https://github.com/clarencesarmiento/Youtube-Downloader/blob/17703353b9cdb6049f8a515ee4082a195f26f8b2/YouTube-Downloader%20Interface.png)
+A Desktop application written in Python to download YouTube Video or Audio.
 
-## [.exe](https://www.mediafire.com/file/30nupbjy9j3dj0u/YouTube-Downloader_V1.1.zip/file)
 
-## DESCRIPTION:
-A desktop application written in Python to download YouTube Video or Audio.
-### How the Program Works?
-First, the program validates the link if it is a valid youtube link before downloading. 
-Check [Wiki](https://github.com/clarencesarmiento/Youtube-Downloader/wiki) for more information.
-### Built With
-- [python](https://www.python.org/) - Backend
-- [customtkinter](https://github.com/tomschimansky/customtkinter) - Frontend
+## Screenshots
 
-### Extensions
-- [pytube](https://pytube.io/en/latest/index.html) - Package
+![Light Mode](https://github.com/clarencesarmiento/Youtube-Downloader/blob/0db95eac105dc7f278c0513de81e0fac9d992692/Images/light-mode.png)
+![Dark Mode](https://github.com/clarencesarmiento/Youtube-Downloader/blob/0db95eac105dc7f278c0513de81e0fac9d992692/Images/dark-mode.png)
 
-## TODO:
-### Download
-Download the Repository through Clone Repository using [Git](https://git-scm.com/downloads) or Download Zip.
+
+## Features
+
+- Light/dark mode toggle
+- Download Video or Audio
+- Video Resolution / Audio Bitrate selection
+
+
+## Tech Stack
+
+**Language:** Python
+
+**GUI Framework:** Tkinter / customtkinter
+
+**Library:** pytube
+
+## Run Locally
+
+Clone the project
+
 ```
 git clone https://github.com/clarencesarmiento/Youtube-Downloader.git
 ```
-### Installation
-After downloading, go to `cmd` and navigate to the folder directory.
+
+Go to the project directory
+
 ```
-cd \folder_directory\Youtube-Downloader
+  cd \Youtube-Downloader
 ```
-Use [pip](https://pip.pypa.io/en/stable/) to install needed libraries inside
-the `requirements.txt`.
+
+Install dependencies
+
 ```
-pip install -r requirements.txt
+pip install -r -requirements.txt
 ```
-### Usage
-Run the `main.py` using [python](https://www.python.org/).
+
+Run the App
+
 ```
 python main.py
 ```
-## FUTURE FEATURES 🌟
-- Download a Playlist 🎶
-## LICENSE:
-Distributed under the MIT License. See `LICENSE` for more information.
+
+
+## Authors
+
+- [@clarencesarmiento](https://www.github.com/clarencesarmiento)
+
+
+## Feedback
+
+If you have any feedback, please reach me out at clarencemolinosarmiento@gmail.com
+
+
+## Appendix
+
+[Moodboard](https://www.behance.net/gallery/181696015/Video-Audio-YouTube-Downloader)
+
+
